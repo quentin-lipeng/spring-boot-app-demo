@@ -1,0 +1,65 @@
+server:
+  port: 8081
+
+logging:
+  level:
+    org.quentin.springbootredisapp: trace
+spring:
+  profiles:
+    active: 'rasp'
+  application:
+    name: redis-app
+---
+spring:
+  config:
+    activate:
+      on-profile: 'rasp'
+  redis:
+    host: raspberrypi
+    port: 6479
+    client-type: jedis
+    password: skywalker
+  datasource:
+    url: jdbc:mysql://raspberrypi:3307/demo
+    username: root
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    open-in-view: false
+  main:
+    banner-mode: off
+  cache:
+    redis:
+      time-to-live: 30s
+      cache-null-values: false
+
+---
+spring:
+  config:
+    activate:
+      on-profile: 'dev'
+  redis:
+    host: 172.18.1.101
+    port: 6379
+    client-type: jedis
+  datasource:
+    url: jdbc:mysql://172.18.1.100:3306/demo
+    username: root
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: create
+    show-sql: false
+    open-in-view: false
+  main:
+    banner-mode: off
+  cache:
+    redis:
+      time-to-live: 60s
+      cache-null-values: false

@@ -1,0 +1,2 @@
+## GET all products
+include::{snippets}/product/curl-request.adoc[]
